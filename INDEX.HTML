@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Government CPC Polytechnic, Mysuru - interactive college website">
+<title>Government CPC Polytechnic | Mysuru</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#050811;
+    --bg2:#080e1c;
+    --bg3:#0d1527;
+    --card:#101a2d;
+    --card2:#142039;
+    --gold:#c99a42;
+    --gold2:#f4d58b;
+    --gold3:#ffe8ad;
+    --blue:#3ba9ff;
+    --cyan:#62e7ff;
+    --green:#42d392;
+    --purple:#9b7cff;
+    --white:#fff;
+    --text:#edf2fa;
+    --muted:#9ba8bc;
+    --muted2:#68758a;
+    --border:rgba(255,255,255,.10);
+    --border2:rgba(255,255,255,.06);
+    --shadow:0 35px 100px rgba(0,0,0,.45);
+    --radius:24px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Inter","DM Sans",sans-serif;
+    overflow-x:hidden;
+}
+
+body.modal-open{overflow:hidden;}
+
+a{text-decoration:none;color:inherit;}
+button,input,select,textarea{font:inherit;}
+button{cursor:pointer;}
+img{display:block;width:100%;height:100%;object-fit:cover;}
+::selection{background:var(--gold);color:#050811;}
+
+.background-grid{
+    position:fixed;
+    inset:0;
+    z-index:-10;
+    pointer-events:none;
+    background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:linear-gradient(to bottom,black 0%,transparent 90%);
+}
+
+.ambient{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(100px);
+    pointer-events:none;
+    z-index:-9;
+    opacity:.20;
+}
+.ambient.one{
+    width:450px;height:450px;background:#b37b18;
+    top:-150px;left:-150px;
+    animation:ambientMove1 14s infinite alternate ease-in-out;
+}
+.ambient.two{
+    width:400px;height:400px;background:#1554a4;
+    right:-150px;top:35%;
+    animation:ambientMove2 18s infinite alternate ease-in-out;
+}
+.ambient.three{
+    width:350px;height:350px;background:#54218f;
+    left:25%;bottom:-150px;
+    animation:ambientMove3 16s infinite alternate ease-in-out;
+}
+
+@keyframes ambientMove1{to{transform:translate(200px,180px)}}
+@keyframes ambientMove2{to{transform:translate(-150px,100px)}}
+@keyframes ambientMove3{to{transform:translate(150px,-120px)}}
+
+/* LOADER */
+.loader{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    background:#02040a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:1.2s cubic-bezier(.77,0,.18,1);
+}
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+    transform:scale(1.04);
+}
+.loader-core{text-align:center;}
+.loader-ring{
+    width:150px;height:150px;
+    border:1px solid rgba(255,255,255,.1);
+    border-top-color:var(--gold2);
+    border-right-color:var(--gold2);
+    border-radius:50%;
+    animation:loaderSpin 1.4s linear infinite;
+    margin:auto;
+    display:grid;
+    place-items:center;
+    box-shadow:0 0 50px rgba(201,154,66,.1),inset 0 0 30px rgba(201,154,66,.08);
+}
+.loader-ring span{
+    font-family:"Playfair Display";
+    font-size:35px;
+    color:var(--gold2);
+    animation:loaderReverse 1.4s linear infinite;
+}
+.loader-title{
+    margin-top:30px;font-size:14px;font-weight:800;letter-spacing:5px;
+}
+.loader-sub{
+    margin-top:8px;color:var(--muted2);font-size:10px;letter-spacing:3px;
+}
+.loader-progress{
+    width:250px;height:2px;background:#1b2435;margin:25px auto 0;overflow:hidden;
+}
+.loader-progress span{
+    display:block;width:35%;height:100%;
+    background:linear-gradient(90deg,transparent,var(--gold2),transparent);
+    animation:loaderProgress 1.2s infinite;
+}
+@keyframes loaderSpin{to{transform:rotate(360deg)}}
+@keyframes loaderReverse{to{transform:rotate(-360deg)}}
+@keyframes loaderProgress{
+    from{transform:translateX(-150%)}to{transform:translateX(450%)}
+}
+
+/* HEADER */
+.header{
+    position:fixed;top:0;left:0;right:0;height:88px;
+    z-index:5000;transition:.5s;
+}
+.header.scrolled{
+    height:72px;background:rgba(4,8,17,.82);
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(25px);
+}
+.nav{
+    width:min(1450px,94%);height:100%;margin:auto;
+    display:flex;align-items:center;justify-content:space-between;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-emblem{
+    width:46px;height:46px;border:1px solid rgba(244,213,139,.65);
+    border-radius:50%;display:grid;place-items:center;color:var(--gold2);
+    font-family:"Playfair Display";font-size:16px;position:relative;
+}
+.brand-emblem:before{
+    content:"";position:absolute;inset:5px;
+    border:1px solid rgba(244,213,139,.18);border-radius:50%;
+}
+.brand-text strong{display:block;font-family:"Playfair Display";font-size:17px;}
+.brand-text small{
+    display:block;color:#7d899d;font-size:9px;letter-spacing:2px;margin-top:2px;
+}
+.nav-links{
+    display:flex;align-items:center;gap:22px;list-style:none;
+}
+.nav-links a{
+    font-size:10px;font-weight:700;text-transform:uppercase;
+    letter-spacing:1.5px;color:#b9c2d1;position:relative;transition:.3s;
+}
+.nav-links a:after{
+    content:"";position:absolute;left:50%;bottom:-10px;width:0;height:1px;
+    background:var(--gold2);transform:translateX(-50%);transition:.3s;
+}
+.nav-links a:hover{color:#fff;}
+.nav-links a:hover:after{width:100%;}
+.nav-apply{
+    padding:11px 18px;border:1px solid rgba(244,213,139,.45);
+    color:var(--gold2);font-size:10px;font-weight:800;
+    text-transform:uppercase;letter-spacing:1px;transition:.35s;
+}
+.nav-apply:hover{
+    background:var(--gold2);color:#070a12;
+    box-shadow:0 10px 35px rgba(244,213,139,.2);
+}
+.menu-btn{
+    display:none;border:0;background:none;color:#fff;font-size:28px;
+}
+
+/* HERO */
+.hero{
+    min-height:100vh;position:relative;overflow:hidden;
+    display:flex;align-items:center;
+}
+.hero-image{
+    position:absolute;inset:0;
+    background:
+        linear-gradient(90deg,rgba(2,5,13,.97) 0%,rgba(2,5,13,.82) 35%,rgba(2,5,13,.45) 75%,rgba(2,5,13,.7) 100%),
+        url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2200&q=90")
+        center/cover;
+    transform:scale(1.08);
+    animation:heroZoom 16s ease-in-out infinite alternate;
+}
+@keyframes heroZoom{to{transform:scale(1.16)}}
+.hero-overlay{
+    position:absolute;inset:0;
+    background:
+        radial-gradient(circle at 75% 40%,rgba(77,179,255,.13),transparent 25%),
+        radial-gradient(circle at 20% 70%,rgba(201,154,66,.12),transparent 25%);
+}
+.hero-lines{
+    position:absolute;inset:0;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:90px 90px;
+    mask-image:linear-gradient(to bottom,black,transparent 95%);
+}
+.hero-content{
+    position:relative;z-index:5;width:min(1450px,90%);
+    margin:auto;padding-top:90px;
+}
+.hero-kicker{
+    display:inline-flex;align-items:center;gap:10px;padding:9px 14px;
+    border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);
+    backdrop-filter:blur(15px);font-size:10px;letter-spacing:3px;color:#cdd6e4;
+    animation:heroReveal .9s .2s both;
+}
+.live-dot{
+    width:6px;height:6px;background:#4de19b;border-radius:50%;
+    box-shadow:0 0 15px #4de19b;animation:livePulse 1.5s infinite;
+}
+@keyframes livePulse{50%{box-shadow:0 0 30px #4de19b}}
+.hero-title{
+    font-family:"Playfair Display";font-size:clamp(58px,8.5vw,135px);
+    line-height:.82;max-width:1100px;margin:30px 0;letter-spacing:-4px;
+    animation:heroReveal 1s .35s both;
+}
+.hero-title .gold{color:var(--gold2);font-style:italic;}
+.hero-title .outline{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.55);}
+.hero-description{
+    max-width:670px;color:#bdc7d6;font-size:16px;line-height:1.9;
+    animation:heroReveal 1s .5s both;
+}
+.hero-actions{
+    display:flex;gap:12px;margin-top:30px;flex-wrap:wrap;
+    animation:heroReveal 1s .65s both;
+}
+.hero-btn{
+    padding:15px 22px;border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.05);backdrop-filter:blur(15px);color:#fff;
+    font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+    transition:.35s;
+}
+.hero-btn.gold{background:var(--gold2);color:#080b13;border-color:var(--gold2);}
+.hero-btn:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.3);}
+.hero-side-card{
+    position:absolute;z-index:5;right:6%;bottom:15%;width:240px;padding:16px;
+    border:1px solid rgba(255,255,255,.14);background:rgba(8,14,27,.58);
+    backdrop-filter:blur(20px);animation:floatCard 5s ease-in-out infinite;
+}
+.hero-side-image{height:130px;overflow:hidden;margin-bottom:14px;}
+.hero-side-card strong{display:block;font-family:"Playfair Display";font-size:22px;}
+.hero-side-card span{color:#7f8ba0;font-size:10px;}
+@keyframes floatCard{50%{transform:translateY(-15px) rotateY(-4deg) rotateX(3deg)}}
+.hero-scroll{
+    position:absolute;bottom:30px;left:5%;z-index:6;font-size:9px;color:#768197;
+    letter-spacing:4px;writing-mode:vertical-rl;
+}
+.hero-scroll:after{
+    content:"";display:block;width:1px;height:50px;margin:12px auto 0;
+    background:linear-gradient(var(--gold2),transparent);
+}
+@keyframes heroReveal{
+    from{opacity:0;transform:translateY(40px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+/* COMMON */
+.section{padding:130px 5%;position:relative;}
+.container{width:min(1450px,100%);margin:auto;}
+.section-top{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:40px;margin-bottom:55px;
+}
+.section-label{
+    color:var(--gold2);font-size:10px;letter-spacing:4px;font-weight:800;
+    text-transform:uppercase;margin-bottom:16px;
+}
+.section-heading{
+    font-family:"Playfair Display";font-size:clamp(43px,5vw,75px);
+    line-height:.98;letter-spacing:-2px;
+}
+.section-description{max-width:540px;color:var(--muted);font-size:14px;line-height:1.9;}
+.reveal{
+    opacity:0;transform:translateY(65px);
+    transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1);
+}
+.reveal.show{opacity:1;transform:none;}
+
+/* ABOUT */
+.about{
+    background:radial-gradient(circle at 80% 20%,rgba(201,154,66,.08),transparent 25%),var(--bg);
+}
+.about-layout{
+    display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+.about-visual{height:620px;perspective:1400px;}
+.about-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:.15s;}
+.about-main-image{
+    position:absolute;inset:0;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);
+}
+.about-main-image img{transition:1s;}
+.about-visual:hover .about-main-image img{transform:scale(1.08);}
+.about-main-image:after{
+    content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.7));
+}
+.about-badge{
+    position:absolute;z-index:3;bottom:30px;left:30px;padding:25px;width:220px;
+    background:rgba(7,12,24,.78);backdrop-filter:blur(20px);
+    border:1px solid rgba(244,213,139,.25);transform:translateZ(70px);
+}
+.about-badge strong{
+    font-family:"Playfair Display";color:var(--gold2);font-size:55px;display:block;line-height:1;
+}
+.about-badge span{color:#aab3c3;font-size:10px;letter-spacing:1px;}
+.about-copy h3{font-family:"Playfair Display";font-size:35px;margin-bottom:20px;}
+.about-copy p{color:var(--muted);font-size:14px;line-height:2;margin-bottom:18px;}
+.about-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:30px;}
+.about-feature{
+    padding:18px;border:1px solid var(--border);background:rgba(255,255,255,.025);transition:.4s;
+}
+.about-feature:hover{transform:translateY(-7px);border-color:rgba(244,213,139,.35);}
+.about-feature strong{color:var(--gold2);display:block;margin-bottom:5px;}
+.about-feature span{color:#7d899d;font-size:11px;}
+
+/* STATS */
+.stats{
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.018);
+}
+.stat{padding:55px 20px;text-align:center;border-right:1px solid var(--border);transition:.4s;}
+.stat:last-child{border-right:0;}
+.stat:hover{background:rgba(255,255,255,.035);}
+.stat-number{font-family:"Playfair Display";font-size:55px;color:var(--gold2);}
+.stat-label{color:#7f8a9e;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-top:7px;}
+
+/* COURSES */
+.course-section{
+    background:radial-gradient(circle at 20% 10%,rgba(72,160,255,.08),transparent 25%),var(--bg2);
+}
+.course-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px;}
+.filter-btn{
+    padding:10px 16px;border:1px solid var(--border);color:#8e9bad;
+    background:rgba(255,255,255,.025);font-size:10px;text-transform:uppercase;
+    letter-spacing:1px;transition:.3s;
+}
+.filter-btn.active,.filter-btn:hover{
+    color:#050811;background:var(--gold2);border-color:var(--gold2);
+}
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.course-card{min-height:330px;position:relative;perspective:1200px;cursor:pointer;}
+.course-card-inner{
+    width:100%;height:100%;min-height:330px;position:relative;
+    transform-style:preserve-3d;transition:transform .75s cubic-bezier(.2,.8,.2,1);
+}
+.course-card:hover .course-card-inner{transform:rotateY(180deg);}
+.course-front,.course-back{
+    position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;
+    border:1px solid var(--border);background:var(--card);
+}
+.course-front{transform:translateZ(0);}
+.course-image{height:190px;position:relative;overflow:hidden;}
+.course-image img{transition:.8s;}
+.course-card:hover .course-image img{transform:scale(1.1);}
+.course-image:after{
+    content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(5,8,17,.9));
+}
+.course-code{
+    position:absolute;z-index:2;top:16px;left:16px;padding:7px 10px;
+    border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.35);
+    backdrop-filter:blur(10px);font-size:9px;letter-spacing:2px;
+}
+.course-info{padding:22px;}
+.course-info h3{font-family:"Playfair Display";font-size:25px;margin-bottom:7px;}
+.course-info p{color:#8290a5;font-size:11px;line-height:1.6;}
+.course-back{
+    transform:rotateY(180deg);padding:30px;
+    background:radial-gradient(circle at 90% 0%,rgba(244,213,139,.15),transparent 35%),var(--card2);
+}
+.course-back h3{font-family:"Playfair Display";font-size:30px;color:var(--gold2);margin-bottom:15px;}
+.course-back p{color:#aab5c8;font-size:12px;line-height:1.7;}
+.course-back ul{list-style:none;margin-top:18px;}
+.course-back li{color:#aab5c8;font-size:11px;padding:8px 0;border-bottom:1px solid var(--border2);}
+.course-back li:before{content:"◆";color:var(--gold2);margin-right:8px;font-size:7px;}
+.course-open{
+    position:absolute;bottom:22px;left:30px;right:30px;text-align:center;
+    padding:11px;border:1px solid rgba(244,213,139,.35);color:var(--gold2);
+    font-size:9px;letter-spacing:2px;
+}
+
+/* CAMPUS */
+.campus{background:#060a13;}
+.campus-map{display:grid;grid-template-columns:1.4fr .6fr;gap:18px;}
+.campus-main{height:600px;position:relative;overflow:hidden;border:1px solid var(--border);cursor:pointer;}
+.campus-main img,.campus-tile img{transition:1s;}
+.campus-main:hover img{transform:scale(1.07);}
+.campus-main:after,.campus-tile:after{
+    content:"";position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(0,0,0,.9));
+}
+.campus-title{position:absolute;left:30px;bottom:30px;z-index:3;}
+.campus-title span{color:var(--gold2);font-size:9px;letter-spacing:3px;}
+.campus-title h3{font-family:"Playfair Display";font-size:38px;margin-top:7px;}
+.campus-side{display:grid;grid-template-rows:1fr 1fr;gap:18px;}
+.campus-tile{position:relative;overflow:hidden;border:1px solid var(--border);cursor:pointer;}
+.campus-tile:hover img{transform:scale(1.1);}
+.campus-tile-content{position:absolute;left:22px;bottom:22px;z-index:3;}
+.campus-tile-content h3{font-family:"Playfair Display";font-size:28px;}
+.campus-tile-content span{color:var(--gold2);font-size:9px;letter-spacing:2px;}
+
+/* CLASSROOMS */
+.classroom-layout{display:grid;grid-template-columns:270px 1fr;gap:18px;}
+.classroom-menu{
+    background:#f4f2ed;border:1px solid #dedbd4;align-self:start;position:sticky;top:95px;
+}
+.classroom-menu button{
+    width:100%;padding:16px;text-align:left;background:none;border:0;
+    border-bottom:1px solid #e3e0d9;color:#667085;font-size:11px;font-weight:700;
+    transition:.3s;
+}
+.classroom-menu button.active,.classroom-menu button:hover{background:#111827;color:var(--gold2);}
+.classroom-panel{
+    min-height:620px;background:#fff;border:1px solid #dedbd4;
+    box-shadow:0 30px 70px rgba(0,0,0,.08);overflow:hidden;position:relative;color:#111827;
+}
+.classroom-panel-top{height:290px;position:relative;}
+.classroom-panel-top img{transition:.8s;}
+.classroom-panel:hover .classroom-panel-top img{transform:scale(1.04);}
+.classroom-panel-overlay{position:absolute;inset:0;background:linear-gradient(transparent 25%,rgba(0,0,0,.85));}
+.classroom-panel-title{position:absolute;left:30px;bottom:25px;z-index:2;color:#fff;}
+.classroom-panel-title span{color:var(--gold2);font-size:9px;letter-spacing:3px;}
+.classroom-panel-title h3{font-family:"Playfair Display";font-size:38px;}
+.classroom-body{padding:35px;}
+.classroom-body p{color:#697386;font-size:13px;line-height:1.8;}
+.classroom-details{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:25px;}
+.detail-box{padding:18px;border:1px solid #e5e1d9;}
+.detail-box strong{display:block;color:#111827;margin-bottom:7px;font-size:12px;}
+.detail-box span{font-size:11px;color:#697386;line-height:1.6;}
+
+/* LABS */
+.labs{background:var(--bg2);}
+.lab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;}
+.lab-card{
+    min-height:390px;position:relative;overflow:hidden;border:1px solid var(--border);
+    background:#0d1527;cursor:pointer;
+}
+.lab-card img{transition:.8s;}
+.lab-card:hover img{transform:scale(1.08);}
+.lab-card:after{
+    content:"";position:absolute;inset:0;background:linear-gradient(transparent 25%,rgba(0,0,0,.95));
+}
+.lab-card-content{position:absolute;z-index:2;left:24px;right:24px;bottom:24px;}
+.lab-card-content>span{color:var(--gold2);font-size:9px;letter-spacing:3px;}
+.lab-card-content h3{font-family:"Playfair Display";font-size:25px;margin:8px 0;}
+.lab-card-content p{font-size:11px;line-height:1.7;color:#b1bdce;}
+.lab-list{list-style:none;margin-top:12px;}
+.lab-list li{display:inline-block;color:#dce4ef;font-size:9px;border:1px solid rgba(255,255,255,.14);padding:6px 8px;margin:3px 2px 0 0;}
+
+/* SPORTS */
+.sports{
+    background:linear-gradient(rgba(3,7,15,.92),rgba(3,7,15,.98)),
+    url("https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=2200&q=90")
+    center/cover fixed;
+}
+.sport-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;}
+.sport-card{height:320px;position:relative;overflow:hidden;border:1px solid var(--border);cursor:pointer;}
+.sport-card img{transition:.8s;}
+.sport-card:hover img{transform:scale(1.1);}
+.sport-card:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 20%,rgba(0,0,0,.92));}
+.sport-info{position:absolute;z-index:2;left:20px;bottom:20px;}
+.sport-info span{color:var(--gold2);font-size:9px;letter-spacing:2px;}
+.sport-info h3{font-family:"Playfair Display";font-size:26px;margin-top:5px;}
+
+/* FACULTY */
+.faculty-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;}
+.faculty-card{position:relative;min-height:390px;overflow:hidden;border:1px solid var(--border);cursor:pointer;background:var(--card);}
+.faculty-card img{transition:.8s;}
+.faculty-card:hover img{transform:scale(1.08);}
+.faculty-card:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 25%,rgba(0,0,0,.94));}
+.faculty-info{position:absolute;z-index:2;left:22px;right:22px;bottom:22px;}
+.faculty-role{color:var(--gold2);font-size:9px;letter-spacing:2px;text-transform:uppercase;}
+.faculty-info h3{font-family:"Playfair Display";font-size:25px;margin:7px 0;}
+.faculty-info p{color:#9ba8bc;font-size:11px;}
+
+/* STUDENT LIFE */
+.life{background:var(--bg2);}
+.life-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;grid-auto-rows:260px;gap:15px;}
+.life-card{position:relative;overflow:hidden;border:1px solid var(--border);cursor:pointer;}
+.life-card.tall{grid-row:span 2;}
+.life-card img{transition:.8s;}
+.life-card:hover img{transform:scale(1.08);}
+.life-card:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 25%,rgba(0,0,0,.9));}
+.life-content{position:absolute;z-index:2;left:22px;bottom:22px;}
+.life-content span{color:var(--gold2);font-size:9px;letter-spacing:2px;}
+.life-content h3{font-family:"Playfair Display";font-size:28px;margin-top:6px;}
+
+/* ADMISSION */
+.admission{
+    background:radial-gradient(circle at 80% 30%,rgba(59,169,255,.09),transparent 30%),var(--bg);
+}
+.admission-panel{
+    display:grid;grid-template-columns:1fr 1fr;gap:50px;
+    border:1px solid var(--border);padding:60px;
+    background:linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
+}
+.admission-list{list-style:none;margin-top:25px;}
+.admission-list li{
+    padding:17px 0;border-bottom:1px solid var(--border);
+    display:flex;gap:15px;color:#aeb9ca;font-size:12px;line-height:1.6;
+}
+.admission-list li b{color:var(--gold2);min-width:25px;}
+.admission-form{display:grid;gap:12px;}
+.field{display:grid;gap:7px;}
+.field label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8996aa;}
+.field input,.field select,.field textarea{
+    width:100%;border:1px solid var(--border);background:rgba(255,255,255,.04);
+    color:#fff;padding:14px;outline:none;
+}
+.field select option{background:#101a2d;color:#fff;}
+.field textarea{min-height:120px;resize:vertical;}
+.submit-btn{
+    border:1px solid var(--gold2);background:var(--gold2);color:#080b13;
+    padding:15px;font-weight:800;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+}
+
+/* CONTACT */
+.contact-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:18px;}
+.contact-card{
+    border:1px solid var(--border);padding:35px;background:rgba(255,255,255,.025);
+}
+.contact-card h3{font-family:"Playfair Display";font-size:32px;margin-bottom:18px;}
+.contact-item{padding:17px 0;border-bottom:1px solid var(--border);}
+.contact-item span{display:block;color:var(--gold2);font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.contact-item p{color:#aab5c7;font-size:12px;line-height:1.7;}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border);background:#03050a;padding:70px 5% 30px;}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px;}
+.footer h3{font-family:"Playfair Display";font-size:22px;margin-bottom:16px;}
+.footer p,.footer a{color:#758197;font-size:11px;line-height:1.9;}
+.footer a:hover{color:var(--gold2);}
+.footer-links{display:grid;gap:7px;}
+.footer-bottom{
+    margin-top:50px;padding-top:22px;border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;
+    color:#566176;font-size:9px;letter-spacing:1px;
+}
+
+/* MODALS */
+.modal{
+    position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.78);
+    backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;
+    padding:25px;
+}
+.modal.show{display:flex;}
+.modal-box{
+    width:min(950px,100%);max-height:90vh;overflow:auto;background:#0a1020;
+    border:1px solid var(--border);box-shadow:var(--shadow);position:relative;
+}
+.modal-close{
+    position:absolute;right:18px;top:18px;width:40px;height:40px;
+    border:1px solid var(--border);background:rgba(0,0,0,.35);color:#fff;z-index:5;
+}
+.modal-head{padding:35px;border-bottom:1px solid var(--border);}
+.modal-head span{color:var(--gold2);font-size:9px;letter-spacing:3px;}
+.modal-head h2{font-family:"Playfair Display";font-size:42px;margin-top:8px;}
+.modal-body{padding:35px;}
+.modal-photo{height:300px;margin-bottom:25px;}
+.modal-body p{color:#aab5c7;line-height:1.8;font-size:13px;}
+.modal-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.modal-tab{
+    padding:9px 13px;border:1px solid var(--border);background:transparent;color:#8c98aa;
+    font-size:9px;text-transform:uppercase;letter-spacing:1px;
+}
+.modal-tab.active{background:var(--gold2);color:#050811;border-color:var(--gold2);}
+.modal-panel{display:none;}
+.modal-panel.active{display:block;}
+.modal-panel ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.modal-panel li{padding:12px;border:1px solid var(--border);color:#aeb9ca;font-size:11px;}
+.modal-panel li:before{content:"◆";color:var(--gold2);font-size:7px;margin-right:7px;}
+
+.search-overlay{
+    position:fixed;inset:0;z-index:10000;background:rgba(2,5,13,.96);
+    display:none;padding:100px 5%;
+}
+.search-overlay.show{display:block;}
+.search-inner{width:min(1000px,100%);margin:auto;}
+.search-top{display:flex;gap:10px;}
+.search-top input{
+    flex:1;padding:20px;border:1px solid var(--border);background:#0d1527;
+    color:#fff;outline:none;font-size:18px;
+}
+.search-top button{width:60px;border:1px solid var(--gold2);background:var(--gold2);}
+.search-results{margin-top:25px;display:grid;gap:8px;}
+.search-result{
+    border:1px solid var(--border);padding:18px;background:rgba(255,255,255,.03);
+    cursor:pointer;
+}
+.search-result strong{display:block;color:var(--gold2);margin-bottom:5px;}
+.search-result span{color:#8e9bad;font-size:11px;}
+
+.back-top{
+    position:fixed;right:25px;bottom:25px;width:45px;height:45px;z-index:4000;
+    border:1px solid var(--gold2);background:#0b1120;color:var(--gold2);
+    opacity:0;visibility:hidden;transition:.3s;
+}
+.back-top.show{opacity:1;visibility:visible;}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+    .nav-links{gap:14px;}
+    .course-grid{grid-template-columns:repeat(2,1fr);}
+    .sport-grid,.faculty-grid{grid-template-columns:repeat(2,1fr);}
+    .lab-grid{grid-template-columns:repeat(2,1fr);}
+    .life-grid{grid-template-columns:1fr 1fr;grid-auto-rows:260px;}
+    .stats{grid-template-columns:repeat(3,1fr);}
+    .stat:nth-child(4),.stat:nth-child(5){border-top:1px solid var(--border);}
+    .campus-map{grid-template-columns:1fr;}
+    .campus-side{grid-template-columns:1fr 1fr;grid-template-rows:300px;}
+}
+@media(max-width:850px){
+    .nav-links{
+        position:fixed;top:72px;right:-100%;width:300px;height:calc(100vh - 72px);
+        background:#070c18;border-left:1px solid var(--border);
+        display:flex;flex-direction:column;align-items:flex-start;padding:35px;gap:25px;
+        transition:.5s;
+    }
+    .nav-links.open{right:0;}
+    .menu-btn{display:block;}
+    .nav-apply{display:none;}
+    .hero-side-card{display:none;}
+    .about-layout,.admission-panel,.contact-layout,.classroom-layout{grid-template-columns:1fr;}
+    .about-visual{height:480px;}
+    .classroom-menu{position:static;display:grid;grid-template-columns:repeat(2,1fr);}
+    .classroom-menu button{border-right:1px solid #e3e0d9;}
+    .classroom-details{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+    .section{padding:85px 5%;}
+    .hero-title{font-size:55px;letter-spacing:-2px;}
+    .hero-description{font-size:13px;}
+    .section-top{display:block;}
+    .section-description{margin-top:20px;}
+    .course-grid,.sport-grid,.faculty-grid,.lab-grid,.life-grid{grid-template-columns:1fr;}
+    .life-grid{grid-auto-rows:280px;}
+    .life-card.tall{grid-row:span 1;}
+    .stats{grid-template-columns:1fr 1fr;}
+    .stat{border-right:1px solid var(--border)!important;border-bottom:1px solid var(--border);}
+    .stat-number{font-size:42px;}
+    .campus-main{height:430px;}
+    .campus-side{grid-template-columns:1fr;grid-template-rows:240px 240px;}
+    .admission-panel{padding:28px;}
+    .footer-grid{grid-template-columns:1fr;}
+    .modal-panel ul{grid-template-columns:1fr;}
+    .modal-head h2{font-size:32px;}
+    .modal-photo{height:220px;}
+}
+@media(prefers-reduced-motion:reduce){
+    *,*:before,*:after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+        scroll-behavior:auto!important;
+    }
+}
+</style>
+<style>
+/* ===== CPC 3D EXPERIENCE ADD-ON ===== */
+:root{--cpc-cyan:#00e5ff;--cpc-blue:#2563ff;--cpc-purple:#8b5cf6;--cpc-dark:#050816}
+body{perspective:1200px;overflow-x:hidden}
+*{scroll-behavior:smooth}
+.cpc-3d-bg{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;background:radial-gradient(circle at 15% 20%,rgba(0,229,255,.10),transparent 30%),radial-gradient(circle at 85% 75%,rgba(139,92,246,.12),transparent 32%)}
+.cpc-orb{position:absolute;border-radius:50%;filter:blur(1px);opacity:.45;animation:orbFloat 10s ease-in-out infinite}
+.cpc-orb.o1{width:180px;height:180px;background:radial-gradient(circle at 30% 25%,#fff,rgba(0,229,255,.6),transparent 70%);left:5%;top:15%}
+.cpc-orb.o2{width:240px;height:240px;background:radial-gradient(circle at 30% 25%,#fff,rgba(139,92,246,.55),transparent 70%);right:5%;top:48%;animation-delay:-3s}
+.cpc-orb.o3{width:120px;height:120px;background:radial-gradient(circle,#fff,rgba(37,99,255,.6),transparent 70%);left:48%;bottom:8%;animation-delay:-6s}
+@keyframes orbFloat{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(35px,-45px,80px) scale(1.12)}}
+.cpc-tilt{transform-style:preserve-3d;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s}
+.cpc-tilt:hover{transform:rotateX(7deg) rotateY(-7deg) translateY(-10px) translateZ(25px);box-shadow:0 25px 60px rgba(0,0,0,.28)}
+.cpc-depth{transform:translateZ(20px);transform-style:preserve-3d}
+.cpc-pulse{animation:cpcPulse 2.5s ease-in-out infinite}
+@keyframes cpcPulse{0%,100%{box-shadow:0 0 0 rgba(0,229,255,0)}50%{box-shadow:0 0 35px rgba(0,229,255,.18)}}
+.cpc-page{display:none;min-height:100vh;padding:120px 6vw 70px;position:fixed;inset:0;z-index:10000;overflow:auto;background:linear-gradient(135deg,#050816 0%,#0a1025 48%,#111936 100%);color:#fff}
+.cpc-page.active{display:block;animation:cpcPageIn .65s cubic-bezier(.2,.8,.2,1)}
+@keyframes cpcPageIn{from{opacity:0;transform:translateY(50px) rotateX(8deg) scale(.96)}to{opacity:1;transform:none}}
+.cpc-page-close{position:fixed;right:28px;top:25px;z-index:10002;width:48px;height:48px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:24px;cursor:pointer;backdrop-filter:blur(12px);transition:.3s}
+.cpc-page-close:hover{transform:rotate(90deg) scale(1.1);background:rgba(0,229,255,.18)}
+.cpc-page-hero{max-width:1200px;margin:auto;display:grid;grid-template-columns:1.2fr .8fr;gap:45px;align-items:center}
+.cpc-page h1{font-size:clamp(42px,6vw,82px);line-height:.95;margin:12px 0 25px;background:linear-gradient(90deg,#fff,#00e5ff,#a78bfa);-webkit-background-clip:text;color:transparent}
+.cpc-kicker{letter-spacing:4px;text-transform:uppercase;color:#00e5ff;font-weight:800}
+.cpc-page-lead{font-size:19px;line-height:1.8;color:#c8d2ee}
+.cpc-3d-card{background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.14);border-radius:26px;padding:28px;backdrop-filter:blur(15px);box-shadow:0 20px 70px rgba(0,0,0,.28);transform-style:preserve-3d}
+.cpc-icon3d{height:230px;border-radius:25px;display:grid;place-items:center;font-size:110px;background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.28),rgba(0,229,255,.12) 30%,rgba(139,92,246,.12) 65%,transparent);animation:icon3d 5s ease-in-out infinite;transform-style:preserve-3d}
+@keyframes icon3d{0%,100%{transform:rotateY(-12deg) rotateX(6deg) translateZ(10px)}50%{transform:rotateY(14deg) rotateX(-5deg) translateZ(40px)}}
+.cpc-info-grid{max-width:1200px;margin:55px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cpc-info-grid h3{margin-top:0;color:#00e5ff}
+.cpc-info-grid p,.cpc-info-grid li{color:#c8d2ee;line-height:1.75}
+.cpc-info-grid ul{padding-left:20px}
+.cpc-progress{height:9px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin:12px 0 20px}
+.cpc-progress span{display:block;height:100%;width:var(--w,80%);background:linear-gradient(90deg,#00e5ff,#8b5cf6);border-radius:99px;animation:progressIn 1.2s ease both}
+@keyframes progressIn{from{width:0}}
+.cpc-action{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:14px;border:1px solid rgba(0,229,255,.4);background:rgba(0,229,255,.1);color:#fff;text-decoration:none;cursor:pointer;font-weight:700;transition:.3s}
+.cpc-action:hover{transform:translateY(-4px) scale(1.03);background:rgba(0,229,255,.2);box-shadow:0 12px 30px rgba(0,229,255,.12)}
+.cpc-launch{position:relative;overflow:hidden}
+.cpc-launch:after{content:"";position:absolute;inset:-80% -20%;background:linear-gradient(110deg,transparent 42%,rgba(255,255,255,.2) 50%,transparent 58%);transform:translateX(-80%);animation:shine 4s infinite}
+@keyframes shine{0%,65%{transform:translateX(-80%)}85%,100%{transform:translateX(80%)}}
+.cpc-section-3d{transform-style:preserve-3d}
+.cpc-floating{animation:floating 4s ease-in-out infinite}
+@keyframes floating{0%,100%{transform:translateY(0) rotateZ(0)}50%{transform:translateY(-9px) rotateZ(1deg)}}
+@media(max-width:850px){.cpc-page-hero{grid-template-columns:1fr}.cpc-info-grid{grid-template-columns:1fr}.cpc-page{padding:95px 22px 50px}}
+</style></head>
+
+<body>
+<div class="cpc-3d-bg" aria-hidden="true">
+  <div class="cpc-orb o1"></div><div class="cpc-orb o2"></div><div class="cpc-orb o3"></div>
+</div>
+
+
+<div class="background-grid"></div>
+<div class="ambient one"></div>
+<div class="ambient two"></div>
+<div class="ambient three"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+    <div class="loader-core">
+        <div class="loader-ring"><span>CPC</span></div>
+        <div class="loader-title">GOVERNMENT CPC POLYTECHNIC</div>
+        <div class="loader-sub">MYSURU · DIGITAL CAMPUS</div>
+        <div class="loader-progress"><span></span></div>
+    </div>
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+    <nav class="nav">
+        <a class="brand" href="#home" aria-label="Government CPC Polytechnic home">
+            <div class="brand-emblem">CPC</div>
+            <div class="brand-text">
+                <strong>Government CPC</strong>
+                <small>POLYTECHNIC · MYSURU</small>
+            </div>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">About</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#campus">Campus</a></li>
+            <li><a href="#labs">Labs</a></li>
+            <li><a href="#faculty">Faculty</a></li>
+            <li><a href="#life">Student Life</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><button class="nav-apply" onclick="scrollToSection('admission')">Apply / Enquire</button></li>
+        </ul>
+
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="Open menu">☰</button>
+    </nav>
+</header>
+
+<!-- HERO -->
+<main id="home">
+<section class="hero">
+    <div class="hero-image"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-lines"></div>
+
+    <div class="hero-content">
+        <div class="hero-kicker"><span class="live-dot"></span> GOVERNMENT TECHNICAL EDUCATION · MYSURU</div>
+
+        <h1 class="hero-title">
+            Learn.<br>
+            <span class="gold">Build.</span>
+            <br><span class="outline">Lead.</span>
+        </h1>
+
+        <p class="hero-description">
+            Government CPC Polytechnic, Mysuru — an interactive digital campus
+            experience covering academics, departments, laboratories, classrooms,
+            sports, faculty, student life and admissions.
+        </p>
+
+        <div class="hero-actions">
+            <a class="hero-btn gold" href="#courses">Explore Courses</a>
+            <a class="hero-btn" href="#campus">Explore Campus</a>
+            <button class="hero-btn" onclick="openSearch()">Search Website</button>
+        </div>
+    </div>
+
+    <div class="hero-side-card">
+        <div class="hero-side-image">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85" alt="Students on campus">
+        </div>
+        <strong>Digital Campus</strong>
+        <span>Academics · Labs · Student Life</span>
+    </div>
+
+    <div class="hero-scroll">SCROLL TO EXPLORE</div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+<div class="container">
+    <div class="section-top reveal">
+        <div>
+            <div class="section-label">01 · About</div>
+            <h2 class="section-heading">A campus built<br>for <i>practical</i> learning.</h2>
+        </div>
+        <p class="section-description">
+            A premium interactive presentation of Government CPC Polytechnic,
+            bringing together departments, workshops, classrooms, laboratories,
+            faculty, sports, student activities and admissions in one place.
+        </p>
+    </div>
+
+    <div class="about-layout">
+        <div class="about-visual reveal" id="aboutVisual">
+            <div class="about-3d" id="about3d">
+                <div class="about-main-image">
+                    <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=1400&q=90" alt="College campus">
+                </div>
+                <div class="about-badge">
+                    <strong>01</strong>
+                    <span>GOVERNMENT TECHNICAL EDUCATION</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-copy reveal">
+            <div class="section-label">THE INSTITUTION</div>
+            <h3>Technology, workshop practice and professional skills.</h3>
+            <p>
+                The website is designed as a single-page digital campus interface.
+                It presents engineering and commercial-practice learning areas,
+                practical laboratories, classrooms, sports and student-focused
+                information in an easy-to-explore format.
+            </p>
+            <p>
+                The course explorer below includes the department information
+                represented in the original project, with interactive cards and
+                detailed department pop-ups.
+            </p>
+
+            <div class="about-feature-grid">
+                <div class="about-feature">
+                    <strong>Government Institution</strong>
+                    <span>Technical education ecosystem</span>
+                </div>
+                <div class="about-feature">
+                    <strong>9 Learning Areas</strong>
+                    <span>Engineering & emerging technology</span>
+                </div>
+                <div class="about-feature">
+                    <strong>Practical Learning</strong>
+                    <span>Workshops & laboratories</span>
+                </div>
+                <div class="about-feature">
+                    <strong>Student Life</strong>
+                    <span>Sports, activities & campus</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- STATS -->
+<section class="stats" aria-label="College highlights">
+    <div class="stat reveal"><div class="stat-number" data-count="9">0</div><div class="stat-label">Learning Areas</div></div>
+    <div class="stat reveal"><div class="stat-number" data-count="3">0</div><div class="stat-label">Year Diploma Path</div></div>
+    <div class="stat reveal"><div class="stat-number" data-count="6">0</div><div class="stat-label">Core Departments</div></div>
+    <div class="stat reveal"><div class="stat-number" data-count="5">0</div><div class="stat-label">Practical Domains</div></div>
+    <div class="stat reveal"><div class="stat-number" data-count="100">0</div><div class="stat-label">Digital Experience</div></div>
+</section>
+
+<!-- COURSES -->
+<section class="section course-section" id="courses">
+<div class="container">
+    <div class="section-top reveal">
+        <div>
+            <div class="section-label">02 · Academics</div>
+            <h2 class="section-heading">Explore the<br><i>departments.</i></h2>
+        </div>
+        <p class="section-description">
+            Hover a card to flip it. Click a department to open its detailed
+            overview, classrooms, laboratories and facilities.
+        </p>
+    </div>
+
+    <div class="course-filter reveal">
+        <button class="filter-btn active" data-filter="all" onclick="filterCourses('all',this)">All</button>
+        <button class="filter-btn" data-filter="engineering" onclick="filterCourses('engineering',this)">Engineering</button>
+        <button class="filter-btn" data-filter="technology" onclick="filterCourses('technology',this)">Technology</button>
+        <button class="filter-btn" data-filter="practice" onclick="filterCourses('practice',this)">Commercial</button>
+    </div>
+
+    <div class="course-grid" id="courseGrid"></div>
+</div>
+</section>
+
+<!-- CAMPUS -->
+<section class="section campus" id="campus">
+<div class="container">
+    <div class="section-top reveal">
+        <div>
+            <div class="section-label">03 · Campus</div>
+            <h2 class="section-heading">See the<br><i>campus.</i></h2>
+        </div>
+        <p class="section-description">
+            Explore campus areas through interactive image panels. Replace the
+            demonstration images with official college photographs when available.
+        </p>
+    </div>
+
+    <div class="campus-map">
+        <div class="campus-main reveal" onclick="openCampus('main')">
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=90" alt="Main campus">
+            <div class="campus-title">
+                <span>CAMPUS 01</span>
+                <h3>Main College Campus</h3>
+            </div>
+        </div>
+
+        <div class="campus-side">
+            <div class="campus-tile reveal" onclick="openCampus('workshop')">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=85" alt="Workshop">
+                <div class="campus-tile-content"><span>CAMPUS 02</span><h3>Workshops</h3></div>
+            </div>
+            <div class="campus-tile reveal" onclick="openCampus('student')">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=85" alt="Students">
+                <div class="campus-tile-content"><span>CAMPUS 03</span><h3>Student Areas</h3></div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- CLASSROOMS -->
+<section class="section" id="classrooms">
+<div class="container">
+    <div class="section-top reveal">
+        <div>
+            <div class="section-label">04 · Classrooms</div>
+            <h2 class="section-heading">Inside the<br><i>classrooms.</i></h2>
+        </div>
+        <p class="section-description">
+            Switch between learning environments and view the kind of practical
+            and theory spaces represented by each department.
+        </p>
+    </div>
+
+    <div class="classroom-layout">
+        <div class="classroom-menu reveal" id="classroomMenu">
+            <button class="active" onclick="changeClassroom('cse',this)">Computer Science</button>
+            <button onclick="changeClassroom('me',this)">Mechanical</button>
+            <button onclick="changeClassroom('ece',this)">Electronics</button>
+            <button onclick="changeClassroom('eee',this)">Electrical</button>
+            <button onclick="changeClassroom('civil',this)">Civil</button>
+            <button onclick="changeClassroom('auto',this)">Automobile</button>
+        </div>
+        <div class="classroom-panel reveal" id="classroomPanel"></div>
+    </div>
+</div>
+</section>
+
+<!-- LABS -->
+<section class="section labs" id="labs">
+<div class="container">
+    <div class="section-top reveal">
+        <div>
+            <div class="section-label">05 · Laboratories</div>
+            <h2 class="section-heading">Practice<br>becomes <i>skill.</i></h2>
+        </div>
+        <p class="section-description">
+            Practical environments represented across programming, electronics,
+            electrical, mechanical and civil learning.
+        </p>
+    </div>
+
+    <div class="lab-grid">
+        <div class="lab-card reveal" onclick="openImage('Computer Programming Lab','Programming, database, web development and project-based practical learning.','https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85" alt="Computer lab">
+            <div class="lab-card-content">
+                <span>LAB 01</span><h3>Computer Lab</h3>
+                <p>Programming and application-development environment.</p>
+                <ul class="lab-list"><li>Programming</li><li>Database</li><li>Web</li><li>Projects</li></ul>
+            </div>
+        </div>
+
+        <div class="lab-card reveal" onclick="openImage('Mechanical Workshop','Workshop practice, machine design, manufacturing and engineering drawing.','https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=85" alt="Mechanical workshop">
+            <div class="lab-card-content">
+                <span>LAB 02</span><h3>Mechanical Workshop</h3>
+                <p>Practical manufacturing and machine-learning environment.</p>
+                <ul class="lab-list"><li>Machines</li><li>Manufacturing</li><li>Workshop</li><li>Design</li></ul>
+            </div>
+        </div>
+
+        <div class="lab-card reveal" onclick="openImage('Electronics Laboratory','Electronics and communication practical learning environment.','https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85" alt="Electronics lab">
+            <div class="lab-card-content">
+                <span>LAB 03</span><h3>Electronics Lab</h3>
+                <p>Digital electronics, communication and embedded concepts.</p>
+                <ul class="lab-list"><li>Digital</li><li>Circuits</li><li>Communication</li><li>Embedded</li></ul>
+            </div>
+        </div>
+
+        <div class="lab-card reveal" onclick="openImage('Civil Laboratory','Construction materials, surveying and engineering testing.','https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=85" alt="Civil engineering">
+            <div class="lab-card-content">
+                <span>LAB 04</span><h3>Civil Laboratory</h3>
+                <p>Construction, surveying and material-testing environment.</p>
+                <ul class="lab-list"><li>Surveying</li><li>Materials</li><li>Concrete</li><li>Structures</li></ul>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- SPORTS -->
+<section class="section sports" id="sports">
+<div class="container">
+    <div class="section-top reveal">
+        <div>
+            <div class="section-label">06 · Sports</div>
+            <h2 class="section-heading">Beyond the<br><i>classroom.</i></h2>
+        </div>
+        <p class="section-description">
+            A student experience also includes recreation, teamwork and campus activities.
+        </p>
+    </div>
+
+    <div class="sport-grid">
+        <div class="sport-card reveal" onclick="openSport('Cricket','Team sport and outdoor student activity.','https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1200&q=85" alt="Cricket">
+            <div class="sport-info"><span>SPORT 01</span><h3>Cricket</h3></div>
+        </div>
+        <div class="sport-card reveal" onclick="openSport('Football','Outdoor team activity for students.','https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1200&q=85" alt="Football">
+            <div class="sport-info"><span>SPORT 02</span><h3>Football</h3></div>
+        </div>
+        <div class="sport-card reveal" onclick="openSport('Volleyball','Team-based campus recreation activity.','https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=1200&q=85" alt="Volleyball">
+            <div class="sport-info"><span>SPORT 03</span><h3>Volleyball</h3></div>
+        </div>
+        <div class="sport-card reveal" onclick="openSport('Athletics','Individual and team fitness-oriented activity.','https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1200&q=85" alt="Athletics">
+            <div class="sport-info"><span>SPORT 04</span><h3>Athletics</h3></div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- FACULTY -->
+<section class="section" id="faculty">
+<div class="container">
+    <div class="section-top reveal">
+        <div>
+            <div class="section-label">07 · Faculty</div>
+            <h2 class="section-heading">People behind<br>the <i>learning.</i></h2>
+        </div>
+        <p class="section-description">
+            Demonstration faculty cards from the original project. Click a card
+            for its department role.
+        </p>
+    </div>
+
+    <div class="faculty-grid">
+        <div class="faculty-card reveal" onclick="openFaculty('HOD · CSE','Head of Department · Computer Science & Engineering','https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85')">
+            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85" alt="Faculty">
+            <div class="faculty-info"><div class="faculty-role">Department Head</div><h3>HOD · CSE</h3><p>Computer Science & Engineering</p></div>
+        </div>
+        <div class="faculty-card reveal" onclick="openFaculty('HOD · Mechanical','Head of Department · Mechanical Engineering','https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=85')">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=85" alt="Faculty">
+            <div class="faculty-info"><div class="faculty-role">Department Head</div><h3>HOD · Mechanical</h3><p>Mechanical Engineering</p></div>
+        </div>
+        <div class="faculty-card reveal" onclick="openFaculty('HOD · Civil','Head of Department · Civil Engineering','https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=85')">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=85" alt="Faculty">
+            <div class="faculty-info"><div class="faculty-role">Department Head</div><h3>HOD · Civil</h3><p>Civil Engineering</p></div>
+        </div>
+        <div class="faculty-card reveal" onclick="openFaculty('HOD · Electronics','Head of Department · Electronics & Communication','https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85')">
+            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85" alt="Faculty">
+            <div class="faculty-info"><div class="faculty-role">Department Head</div><h3>HOD · Electronics</h3><p>Electronics & Communication</p></div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- STUDENT LIFE -->
+<section class="section life" id="life">
+<div class="container">
+    <div class="section-top reveal">
+        <div>
+            <div class="section-label">08 · Student Life</div>
+            <h2 class="section-heading">A campus<br>with <i>energy.</i></h2>
+        </div>
+        <p class="section-description">
+            Student spaces, activities and technical-project culture presented
+            through an interactive visual grid.
+        </p>
+    </div>
+
+    <div class="life-grid">
+        <div class="life-card tall reveal" onclick="openImage('Student Community','A campus environment for learning, teamwork and student activities.','https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=85')">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=85" alt="Students">
+            <div class="life-content"><span>LIFE 01</span><h3>Student Community</h3></div>
+        </div>
+        <div class="life-card reveal" onclick="openImage('Technical Projects','Project development and practical technical learning.','https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85" alt="Technology">
+            <div class="life-content"><span>LIFE 02</span><h3>Technical Projects</h3></div>
+        </div>
+        <div class="life-card reveal" onclick="openImage('Digital Learning','Computer-based digital learning and project work.','https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85" alt="Coding">
+            <div class="life-content"><span>LIFE 03</span><h3>Digital Learning</h3></div>
+        </div>
+        <div class="life-card reveal" onclick="openImage('Campus Activities','Sports, events and collaborative student activities.','https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=85" alt="Campus activity">
+            <div class="life-content"><span>LIFE 04</span><h3>Activities</h3></div>
+        </div>
+        <div class="life-card reveal" onclick="openImage('Workshops','Hands-on practice in engineering workshops and laboratories.','https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1200&q=85')">
+            <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1200&q=85" alt="Workshop">
+            <div class="life-content"><span>LIFE 05</span><h3>Workshops</h3></div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- ADMISSION -->
+<section class="section admission" id="admission">
+<div class="container">
+    <div class="admission-panel reveal">
+        <div>
+            <div class="section-label">09 · Admissions</div>
+            <h2 class="section-heading">Your next<br>chapter <i>starts here.</i></h2>
+            <ul class="admission-list">
+                <li><b>01</b><span>Choose a department that matches your academic and career interests.</span></li>
+                <li><b>02</b><span>Use the enquiry form to collect student contact and course information.</span></li>
+                <li><b>03</b><span>Confirm eligibility, application procedure and official admission dates with the college.</span></li>
+                <li><b>04</b><span>Keep required academic documents ready for the official process.</span></li>
+            </ul>
+        </div>
+
+        <form class="admission-form" onsubmit="submitContact(event)">
+            <div class="field"><label>Student Name</label><input name="name" type="text" placeholder="Enter your name" required></div>
+            <div class="field"><label>Email</label><input name="email" type="email" placeholder="Enter your email" required></div>
+            <div class="field"><label>Phone</label><input name="phone" type="tel" placeholder="Enter your phone number" required></div>
+            <div class="field">
+                <label>Department</label>
+                <select name="department" required>
+                    <option value="">Select Department</option>
+                    <option>Computer Science & Engineering</option>
+                    <option>Artificial Intelligence & Machine Learning</option>
+                    <option>Mechanical Engineering</option>
+                    <option>Machine Tool Technology</option>
+                    <option>Electronics & Communication</option>
+                    <option>Electrical & Electronics</option>
+                    <option>Civil Engineering</option>
+                    <option>Automobile Engineering</option>
+                    <option>Commercial Practice</option>
+                </select>
+            </div>
+            <div class="field"><label>Message</label><textarea name="message" placeholder="Write your enquiry..." required></textarea></div>
+            <button class="submit-btn" type="submit">Submit Enquiry</button>
+        </form>
+    </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+<div class="container">
+    <div class="section-top reveal">
+        <div>
+            <div class="section-label">10 · Contact</div>
+            <h2 class="section-heading">Get in<br><i>touch.</i></h2>
+        </div>
+        <p class="section-description">
+            Contact information below is presented as a website placeholder.
+            Replace it with the college's verified official contact details.
+        </p>
+    </div>
+
+    <div class="contact-layout">
+        <div class="contact-card reveal">
+            <h3>Government CPC Polytechnic</h3>
+            <div class="contact-item"><span>Location</span><p>Mysuru, Karnataka, India</p></div>
+            <div class="contact-item"><span>Institution</span><p>Government Polytechnic / technical education campus presentation.</p></div>
+            <div class="contact-item"><span>Website</span><p>This single HTML file is ready for local hosting or integration into a larger project.</p></div>
+        </div>
+
+        <div class="contact-card reveal">
+            <h3>Quick Navigation</h3>
+            <div class="contact-item"><span>Academics</span><p><a href="#courses">Explore Departments</a> · <a href="#labs">View Laboratories</a></p></div>
+            <div class="contact-item"><span>Campus</span><p><a href="#campus">Explore Campus</a> · <a href="#classrooms">View Classrooms</a></p></div>
+            <div class="contact-item"><span>Students</span><p><a href="#life">Student Life</a> · <a href="#sports">Sports</a></p></div>
+            <div class="contact-item"><span>Admissions</span><p><a href="#admission">Send an Enquiry</a></p></div>
+        </div>
+    </div>
+</div>
+</section>
+</main>
+
+<!-- FOOTER -->
+
+<section id="cpc-3d-explorer" class="cpc-section-3d" style="padding:80px 6vw;background:linear-gradient(180deg,transparent,rgba(0,229,255,.035));">
+<div style="max-width:1200px;margin:auto;text-align:center;">
+<div class="cpc-kicker">3D Interactive Explorer</div>
+<h2 style="font-size:clamp(32px,5vw,62px);margin:10px 0 15px;">Explore Courses & Sports</h2>
+<p style="max-width:750px;margin:0 auto 35px;line-height:1.8;opacity:.78;">Click any card to open a separate animated information page with detailed explanations, practical areas and learning outcomes.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;">
+<button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-computer-science-engineering')">
+    <div style="font-size:48px" class="cpc-depth">💻</div><h3 class="cpc-depth" style="margin:12px 0 5px">Computer Science &amp; Engineering</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-mechanical-engineering')">
+    <div style="font-size:48px" class="cpc-depth">⚙️</div><h3 class="cpc-depth" style="margin:12px 0 5px">Mechanical Engineering</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-machine-tool-technology')">
+    <div style="font-size:48px" class="cpc-depth">🛠️</div><h3 class="cpc-depth" style="margin:12px 0 5px">Machine Tool Technology</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-electronics-communication-engineering')">
+    <div style="font-size:48px" class="cpc-depth">📡</div><h3 class="cpc-depth" style="margin:12px 0 5px">Electronics &amp; Communication Engineering</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-electrical-electronics-engineering')">
+    <div style="font-size:48px" class="cpc-depth">⚡</div><h3 class="cpc-depth" style="margin:12px 0 5px">Electrical &amp; Electronics Engineering</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-civil-engineering')">
+    <div style="font-size:48px" class="cpc-depth">🏗️</div><h3 class="cpc-depth" style="margin:12px 0 5px">Civil Engineering</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-automobile-engineering')">
+    <div style="font-size:48px" class="cpc-depth">🚗</div><h3 class="cpc-depth" style="margin:12px 0 5px">Automobile Engineering</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-commercial-practice')">
+    <div style="font-size:48px" class="cpc-depth">📊</div><h3 class="cpc-depth" style="margin:12px 0 5px">Commercial Practice</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-cricket')">
+    <div style="font-size:48px" class="cpc-depth">🏏</div><h3 class="cpc-depth" style="margin:12px 0 5px">Cricket</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-volleyball')">
+    <div style="font-size:48px" class="cpc-depth">🏐</div><h3 class="cpc-depth" style="margin:12px 0 5px">Volleyball</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-football')">
+    <div style="font-size:48px" class="cpc-depth">⚽</div><h3 class="cpc-depth" style="margin:12px 0 5px">Football</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button><button class="cpc-3d-card cpc-tilt cpc-launch" style="color:inherit;text-align:left;cursor:pointer;" onclick="cpcOpenPage('cpc-page-athletics')">
+    <div style="font-size:48px" class="cpc-depth">🏃</div><h3 class="cpc-depth" style="margin:12px 0 5px">Athletics</h3><p class="cpc-depth" style="opacity:.7;margin:0">Open detailed page →</p>
+    </button>
+</div></div></section>
+
+<section class="cpc-page" id="cpc-page-computer-science-engineering">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Course</div>
+    <h1>Computer Science &amp; Engineering</h1>
+    <p class="cpc-page-lead">Learn programming, software development, databases, web technologies, computer networks and modern computing concepts.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">💻</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>What you learn</h3><p>Core skills include Java/Python programming, algorithms, SQL, web development, version control and problem solving.</p><p><strong>Major areas:</strong> Programming • Web Development • Database • Networks</p></div><div class="cpc-3d-card cpc-tilt"><h3>Practical focus</h3><p>Practical learning, laboratory work, demonstrations and project-based activities help connect classroom concepts with real engineering and workplace applications.</p><div class='cpc-progress' style='--w:86%'><span></span></div><small>Practical learning focus</small></div><div class="cpc-3d-card cpc-tilt"><h3>Career foundation</h3><p>The course provides a technical foundation that can support further education, skill development, internships and entry-level technical roles related to the discipline.</p><div class='cpc-progress' style='--w:78%'><span></span></div><small>Core competency pathway</small></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-mechanical-engineering">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Course</div>
+    <h1>Mechanical Engineering</h1>
+    <p class="cpc-page-lead">Study machines, manufacturing, engineering drawing, materials, thermodynamics and production technologies.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">⚙️</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>What you learn</h3><p>Students develop practical engineering knowledge through workshop practice, design, manufacturing and machine-oriented laboratory work.</p><p><strong>Major areas:</strong> Manufacturing • CAD • Thermodynamics • Machines</p></div><div class="cpc-3d-card cpc-tilt"><h3>Practical focus</h3><p>Practical learning, laboratory work, demonstrations and project-based activities help connect classroom concepts with real engineering and workplace applications.</p><div class='cpc-progress' style='--w:86%'><span></span></div><small>Practical learning focus</small></div><div class="cpc-3d-card cpc-tilt"><h3>Career foundation</h3><p>The course provides a technical foundation that can support further education, skill development, internships and entry-level technical roles related to the discipline.</p><div class='cpc-progress' style='--w:78%'><span></span></div><small>Core competency pathway</small></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-machine-tool-technology">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Course</div>
+    <h1>Machine Tool Technology</h1>
+    <p class="cpc-page-lead">Explore machine tools, machining processes, production systems, metrology and industrial manufacturing.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">🛠️</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>What you learn</h3><p>The course connects engineering theory with practical machining, measurement and manufacturing operations.</p><p><strong>Major areas:</strong> CNC • Machining • Metrology • Production</p></div><div class="cpc-3d-card cpc-tilt"><h3>Practical focus</h3><p>Practical learning, laboratory work, demonstrations and project-based activities help connect classroom concepts with real engineering and workplace applications.</p><div class='cpc-progress' style='--w:86%'><span></span></div><small>Practical learning focus</small></div><div class="cpc-3d-card cpc-tilt"><h3>Career foundation</h3><p>The course provides a technical foundation that can support further education, skill development, internships and entry-level technical roles related to the discipline.</p><div class='cpc-progress' style='--w:78%'><span></span></div><small>Core competency pathway</small></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-electronics-communication-engineering">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Course</div>
+    <h1>Electronics &amp; Communication Engineering</h1>
+    <p class="cpc-page-lead">Build foundations in electronic circuits, communication systems, digital electronics, microcontrollers and embedded systems.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">📡</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>What you learn</h3><p>Students learn how electronic hardware and communication technologies are designed, tested and applied.</p><p><strong>Major areas:</strong> Digital Electronics • Communication • Embedded • IoT</p></div><div class="cpc-3d-card cpc-tilt"><h3>Practical focus</h3><p>Practical learning, laboratory work, demonstrations and project-based activities help connect classroom concepts with real engineering and workplace applications.</p><div class='cpc-progress' style='--w:86%'><span></span></div><small>Practical learning focus</small></div><div class="cpc-3d-card cpc-tilt"><h3>Career foundation</h3><p>The course provides a technical foundation that can support further education, skill development, internships and entry-level technical roles related to the discipline.</p><div class='cpc-progress' style='--w:78%'><span></span></div><small>Core competency pathway</small></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-electrical-electronics-engineering">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Course</div>
+    <h1>Electrical &amp; Electronics Engineering</h1>
+    <p class="cpc-page-lead">Learn electrical circuits, machines, power systems, control systems, electronics and electrical safety.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">⚡</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>What you learn</h3><p>The course combines electrical engineering theory with practical laboratory work and system-level understanding.</p><p><strong>Major areas:</strong> Machines • Power • Control • Electronics</p></div><div class="cpc-3d-card cpc-tilt"><h3>Practical focus</h3><p>Practical learning, laboratory work, demonstrations and project-based activities help connect classroom concepts with real engineering and workplace applications.</p><div class='cpc-progress' style='--w:86%'><span></span></div><small>Practical learning focus</small></div><div class="cpc-3d-card cpc-tilt"><h3>Career foundation</h3><p>The course provides a technical foundation that can support further education, skill development, internships and entry-level technical roles related to the discipline.</p><div class='cpc-progress' style='--w:78%'><span></span></div><small>Core competency pathway</small></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-civil-engineering">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Course</div>
+    <h1>Civil Engineering</h1>
+    <p class="cpc-page-lead">Study construction, surveying, structural basics, materials, transportation and environmental engineering.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">🏗️</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>What you learn</h3><p>Students gain practical knowledge used in construction, measurement, planning and infrastructure projects.</p><p><strong>Major areas:</strong> Surveying • Construction • Materials • Structures</p></div><div class="cpc-3d-card cpc-tilt"><h3>Practical focus</h3><p>Practical learning, laboratory work, demonstrations and project-based activities help connect classroom concepts with real engineering and workplace applications.</p><div class='cpc-progress' style='--w:86%'><span></span></div><small>Practical learning focus</small></div><div class="cpc-3d-card cpc-tilt"><h3>Career foundation</h3><p>The course provides a technical foundation that can support further education, skill development, internships and entry-level technical roles related to the discipline.</p><div class='cpc-progress' style='--w:78%'><span></span></div><small>Core competency pathway</small></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-automobile-engineering">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Course</div>
+    <h1>Automobile Engineering</h1>
+    <p class="cpc-page-lead">Explore vehicle systems, engines, automotive electrical systems, maintenance and modern automobile technologies.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">🚗</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>What you learn</h3><p>The course develops practical understanding of vehicle components, servicing and automotive technology.</p><p><strong>Major areas:</strong> Engines • Vehicles • Maintenance • Auto Electrical</p></div><div class="cpc-3d-card cpc-tilt"><h3>Practical focus</h3><p>Practical learning, laboratory work, demonstrations and project-based activities help connect classroom concepts with real engineering and workplace applications.</p><div class='cpc-progress' style='--w:86%'><span></span></div><small>Practical learning focus</small></div><div class="cpc-3d-card cpc-tilt"><h3>Career foundation</h3><p>The course provides a technical foundation that can support further education, skill development, internships and entry-level technical roles related to the discipline.</p><div class='cpc-progress' style='--w:78%'><span></span></div><small>Core competency pathway</small></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-commercial-practice">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Course</div>
+    <h1>Commercial Practice</h1>
+    <p class="cpc-page-lead">Develop office, accounting, communication, documentation, business and computer application skills.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">📊</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>What you learn</h3><p>Students learn practical administrative and commercial skills for modern workplaces.</p><p><strong>Major areas:</strong> Office Tools • Accounting • Communication • Business</p></div><div class="cpc-3d-card cpc-tilt"><h3>Practical focus</h3><p>Practical learning, laboratory work, demonstrations and project-based activities help connect classroom concepts with real engineering and workplace applications.</p><div class='cpc-progress' style='--w:86%'><span></span></div><small>Practical learning focus</small></div><div class="cpc-3d-card cpc-tilt"><h3>Career foundation</h3><p>The course provides a technical foundation that can support further education, skill development, internships and entry-level technical roles related to the discipline.</p><div class='cpc-progress' style='--w:78%'><span></span></div><small>Core competency pathway</small></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-cricket">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Sports</div>
+    <h1>Cricket</h1>
+    <p class="cpc-page-lead">Cricket is a team bat-and-ball sport played between two teams. Players combine batting, bowling, fielding and strategic decision-making.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">🏏</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>How it is played</h3><p>Cricket is a team bat-and-ball sport played between two teams. Players combine batting, bowling, fielding and strategic decision-making.</p><p><strong>Key activities:</strong> Batting, bowling, fielding, wicket-keeping, running between wickets and team strategy.</p></div><div class="cpc-3d-card cpc-tilt"><h3>Skills developed</h3><p>Builds coordination, concentration, communication, teamwork and tactical thinking.</p><div class='cpc-progress' style='--w:90%'><span></span></div><small>Team & skill development</small></div><div class="cpc-3d-card cpc-tilt"><h3>College participation</h3><p>Students can use sports activities to develop discipline, teamwork and healthy participation in campus life. Training and participation should follow the college's available facilities and schedules.</p></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-volleyball">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Sports</div>
+    <h1>Volleyball</h1>
+    <p class="cpc-page-lead">Volleyball is a fast team sport in which players send the ball over a net and try to make it land inside the opponent&#x27;s court.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">🏐</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>How it is played</h3><p>Volleyball is a fast team sport in which players send the ball over a net and try to make it land inside the opponent&#x27;s court.</p><p><strong>Key activities:</strong> Serving, passing, setting, attacking, blocking and defensive positioning.</p></div><div class="cpc-3d-card cpc-tilt"><h3>Skills developed</h3><p>Develops reflexes, coordination, communication, jumping ability and team cooperation.</p><div class='cpc-progress' style='--w:90%'><span></span></div><small>Team & skill development</small></div><div class="cpc-3d-card cpc-tilt"><h3>College participation</h3><p>Students can use sports activities to develop discipline, teamwork and healthy participation in campus life. Training and participation should follow the college's available facilities and schedules.</p></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-football">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Sports</div>
+    <h1>Football</h1>
+    <p class="cpc-page-lead">Football is a team field sport where players work together to move the ball and score goals while defending their own goal.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">⚽</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>How it is played</h3><p>Football is a team field sport where players work together to move the ball and score goals while defending their own goal.</p><p><strong>Key activities:</strong> Passing, dribbling, shooting, defending, positioning and team tactics.</p></div><div class="cpc-3d-card cpc-tilt"><h3>Skills developed</h3><p>Builds endurance, coordination, decision-making, teamwork and spatial awareness.</p><div class='cpc-progress' style='--w:90%'><span></span></div><small>Team & skill development</small></div><div class="cpc-3d-card cpc-tilt"><h3>College participation</h3><p>Students can use sports activities to develop discipline, teamwork and healthy participation in campus life. Training and participation should follow the college's available facilities and schedules.</p></div></div>
+</section>
+
+
+<section class="cpc-page" id="cpc-page-athletics">
+<button class="cpc-page-close" onclick="cpcClosePage()" aria-label="Close">×</button>
+<div class="cpc-page-hero">
+  <div class="cpc-depth">
+    <div class="cpc-kicker">CPC Polytechnic • Sports</div>
+    <h1>Athletics</h1>
+    <p class="cpc-page-lead">Athletics includes track and field disciplines such as running, jumping and throwing events.</p>
+    <button class="cpc-action cpc-launch" onclick="cpcClosePage()">← Back to College Website</button>
+  </div>
+  <div class="cpc-3d-card cpc-floating"><div class="cpc-icon3d">🏃</div></div>
+</div>
+<div class="cpc-info-grid"><div class="cpc-3d-card cpc-tilt"><h3>How it is played</h3><p>Athletics includes track and field disciplines such as running, jumping and throwing events.</p><p><strong>Key activities:</strong> Sprints, middle-distance running, long-distance running, jumps and throws.</p></div><div class="cpc-3d-card cpc-tilt"><h3>Skills developed</h3><p>Develops physical coordination, discipline, technique and personal performance goals.</p><div class='cpc-progress' style='--w:90%'><span></span></div><small>Team & skill development</small></div><div class="cpc-3d-card cpc-tilt"><h3>College participation</h3><p>Students can use sports activities to develop discipline, teamwork and healthy participation in campus life. Training and participation should follow the college's available facilities and schedules.</p></div></div>
+</section>
+<footer class="footer">
+<div class="container">
+    <div class="footer-grid">
+        <div>
+            <h3>Government CPC</h3>
+            <p>
+                An interactive single-file college website concept for
+                Government CPC Polytechnic, Mysuru.
+            </p>
+        </div>
+        <div>
+            <h3>Academics</h3>
+            <div class="footer-links">
+                <a href="#courses">Departments</a>
+                <a href="#classrooms">Classrooms</a>
+                <a href="#labs">Laboratories</a>
+            </div>
+        </div>
+        <div>
+            <h3>Campus</h3>
+            <div class="footer-links">
+                <a href="#campus">Campus</a>
+                <a href="#sports">Sports</a>
+                <a href="#life">Student Life</a>
+            </div>
+        </div>
+        <div>
+            <h3>Connect</h3>
+            <div class="footer-links">
+                <a href="#faculty">Faculty</a>
+                <a href="#admission">Admissions</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <span>© <span id="year"></span> Government CPC Polytechnic · Mysuru</span>
+        <span>SINGLE HTML · RESPONSIVE · INTERACTIVE</span>
+    </div>
+</div>
+</footer>
+
+<!-- DEPARTMENT MODAL -->
+<div class="modal" id="departmentModal" role="dialog" aria-modal="true" aria-labelledby="departmentTitle">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+        <div class="modal-head">
+            <span id="departmentCode">DEPARTMENT</span>
+            <h2 id="departmentTitle">Department</h2>
+        </div>
+        <div class="modal-body">
+            <div class="modal-photo"><img id="departmentPhoto" src="" alt="Department"></div>
+            <p id="departmentDescription"></p>
+            <div class="modal-tabs">
+                <button class="modal-tab active" onclick="switchModalTab('overview',this)">Overview</button>
+                <button class="modal-tab" onclick="switchModalTab('classrooms',this)">Classrooms</button>
+                <button class="modal-tab" onclick="switchModalTab('labs',this)">Labs</button>
+                <button class="modal-tab" onclick="switchModalTab('facilities',this)">Facilities</button>
+            </div>
+            <div class="modal-panel active" id="panel-overview"><ul id="overviewList"></ul></div>
+            <div class="modal-panel" id="panel-classrooms"><ul id="classroomsList"></ul></div>
+            <div class="modal-panel" id="panel-labs"><ul id="labsList"></ul></div>
+            <div class="modal-panel" id="panel-facilities"><ul id="facilitiesList"></ul></div>
+        </div>
+    </div>
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="modal" id="imageModal" role="dialog" aria-modal="true" aria-labelledby="imageModalTitle">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeImageModal()" aria-label="Close">✕</button>
+        <div class="modal-head"><span>INTERACTIVE VIEW</span><h2 id="imageModalTitle">View</h2></div>
+        <div class="modal-body">
+            <div class="modal-photo"><img id="imageModalPhoto" src="" alt=""></div>
+            <p id="imageModalText"></p>
+        </div>
+    </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-inner">
+        <div class="search-top">
+            <input id="globalSearch" type="search" placeholder="Search departments, labs, campus, sports..." oninput="globalSearch()">
+            <button onclick="closeSearch()" aria-label="Close search">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
+</div>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+"use strict";
+
+/* =========================================================
+   DEPARTMENT DATA
+   ========================================================= */
+const departments = {
+    cse:{
+        code:"CSE · COMPUTER SCIENCE",
+        title:"Computer Science & Engineering",
+        category:"engineering",
+        image:"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=90",
+        description:"A technology-focused department covering programming, software, databases, web technologies, computer systems and practical computing.",
+        overview:["Programming and problem solving","Database and information systems","Web and application development","Computer networks and systems","Project-based technical learning"],
+        classrooms:["Programming Classroom","Database Classroom","Computer Applications Classroom","Theory Classroom","Project Discussion Room"],
+        labs:["Computer Programming Lab","Database Lab","Web Development Lab","Networking Practice Area","Project Development Lab"],
+        facilities:["Computer-based practical learning","Technical project workspace","Internet and digital learning resources","Library and reference resources","Student technical activities"]
+    },
+    ai:{
+        code:"AI · EMERGING TECHNOLOGY",
+        title:"Artificial Intelligence & Machine Learning",
+        category:"technology",
+        image:"https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=1800&q=90",
+        description:"A future-focused technology pathway presented in the original project as an emerging AI and Machine Learning learning area.",
+        overview:["Python programming","Data concepts","Machine learning fundamentals","Artificial intelligence concepts","Intelligent application projects"],
+        classrooms:["AI Theory Classroom","Python Programming Classroom","Data Learning Classroom","Project Classroom"],
+        labs:["AI Practice Lab","Programming Lab","Data Lab","Project Lab"],
+        facilities:["AI project workspace","Programming resources","Data learning environment","Digital learning resources"]
+    },
+    mechanical:{
+        code:"ME · MECHANICAL ENGINEERING",
+        title:"Mechanical Engineering",
+        category:"engineering",
+        image:"https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1800&q=90",
+        description:"Mechanical engineering combines engineering theory with workshop practice, manufacturing, machine design, engineering drawing and practical production skills.",
+        overview:["Machine design","Manufacturing processes","Engineering drawing","Workshop practice","Production technology"],
+        classrooms:["Mechanical Theory Classroom","Machine Design Classroom","Engineering Drawing Hall","Manufacturing Classroom"],
+        labs:["Mechanical Workshop","Manufacturing Lab","Machine Tools Area","Engineering Drawing Lab"],
+        facilities:["Workshop demonstrations","Machine practice","Manufacturing learning","Industry-oriented practical learning"]
+    },
+    mtt:{
+        code:"MTT · MACHINE TOOL TECHNOLOGY",
+        title:"Machine Tool Technology",
+        category:"engineering",
+        image:"https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1800&q=90",
+        description:"Machine Tool Technology focuses on manufacturing systems, machine tools, production processes and practical workshop skills.",
+        overview:["CNC concepts","Machine tools","Production processes","Workshop practice","Manufacturing systems"],
+        classrooms:["Machine Tool Classroom","CNC Classroom","Production Classroom","Workshop Planning Room"],
+        labs:["CNC Practice Area","Machine Tools Workshop","Production Lab","Measurement Area"],
+        facilities:["CNC learning","Machine-tool practice","Workshop demonstrations","Industry-oriented practical learning"]
+    },
+    ece:{
+        code:"ECE · ELECTRONICS",
+        title:"Electronics & Communication Engineering",
+        category:"engineering",
+        image:"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=90",
+        description:"Electronics and Communication combines electronic circuits, digital systems, communication concepts and practical technology.",
+        overview:["Analog electronics","Digital electronics","Communication systems","Microcontrollers","Embedded technology"],
+        classrooms:["ECE Theory Classroom","Digital Electronics Classroom","Communication Classroom","Embedded Systems Classroom"],
+        labs:["Electronics Laboratory","Digital Electronics Lab","Communication Lab","Embedded Systems Lab","Project Lab"],
+        facilities:["Electronics practice","Communication equipment","Embedded learning","Project development area"]
+    },
+    eee:{
+        code:"EEE · ELECTRICAL",
+        title:"Electrical & Electronics Engineering",
+        category:"engineering",
+        image:"https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1800&q=90",
+        description:"Electrical and Electronics Engineering covers electrical machines, power systems, control, electronics and practical electrical technology.",
+        overview:["Electrical machines","Power systems","Electrical measurements","Control systems","Basic electronics"],
+        classrooms:["EEE Theory Classroom","Electrical Machines Classroom","Power Systems Classroom","Control Systems Classroom"],
+        labs:["Electrical Machines Lab","Measurements Lab","Power Systems Practice","Control Systems Lab","Electrical Workshop"],
+        facilities:["Electrical machines","Measurement instruments","Electrical workshop","Power-system demonstrations","Technical project workspace"]
+    },
+    civil:{
+        code:"CIVIL · CIVIL ENGINEERING",
+        title:"Civil Engineering",
+        category:"engineering",
+        image:"https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1800&q=90",
+        description:"Civil Engineering covers construction, surveying, engineering materials, structures, infrastructure and practical testing.",
+        overview:["Surveying","Construction technology","Building materials","Structural concepts","Engineering drawing","Material testing"],
+        classrooms:["Civil Theory Classroom","Surveying Classroom","Structural Classroom","Construction Classroom","Engineering Drawing Hall"],
+        labs:["Material Testing Laboratory","Surveying Practice Area","Concrete Laboratory","Soil Testing Area","Construction Practice Area"],
+        facilities:["Material testing","Surveying equipment","Construction practice","Engineering drawing","Infrastructure project learning"]
+    },
+    auto:{
+        code:"AUTO · AUTOMOBILE",
+        title:"Automobile Engineering",
+        category:"engineering",
+        image:"https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=90",
+        description:"Automobile Engineering combines vehicle systems, engine technology, automotive maintenance, diagnostics and workshop practice.",
+        overview:["Automotive engines","Vehicle systems","Automotive electrical systems","Maintenance","Diagnostics"],
+        classrooms:["Automobile Theory Classroom","Vehicle Systems Classroom","Automotive Electrical Classroom","Diagnostics Classroom"],
+        labs:["Automobile Workshop","Engine Practice Area","Vehicle Diagnostics Area","Automotive Electrical Lab"],
+        facilities:["Automotive workshop","Vehicle systems practice","Engine learning area","Diagnostics practice","Technical project work"]
+    },
+    cp:{
+        code:"CP · COMMERCIAL PRACTICE",
+        title:"Commercial Practice",
+        category:"practice",
+        image:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1800&q=90",
+        description:"Commercial Practice focuses on professional communication, office applications, business practice and administrative skills.",
+        overview:["Professional communication","Office applications","Business practice","Computer applications","Administrative skills"],
+        classrooms:["Commercial Practice Classroom","Communication Classroom","Office Practice Classroom","Computer Applications Classroom"],
+        labs:["Computer Applications Lab","Office Practice Lab","Communication Practice Area"],
+        facilities:["Office applications","Business practice","Computer applications","Administrative skills"]
+    }
+};
+
+const courseImages = {
+    cse:"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85",
+    ai:"https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=1000&q=85",
+    mechanical:"https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1000&q=85",
+    mtt:"https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1000&q=85",
+    ece:"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85",
+    eee:"https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1000&q=85",
+    civil:"https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=85",
+    auto:"https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1000&q=85",
+    cp:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=85"
+};
+
+const courseOrder = ["cse","ai","mechanical","mtt","ece","eee","civil","auto","cp"];
+
+/* =========================================================
+   COURSE RENDERING
+   ========================================================= */
+function renderCourses(filter="all"){
+    const grid = document.getElementById("courseGrid");
+    grid.innerHTML = "";
+
+    courseOrder.forEach(key=>{
+        const data = departments[key];
+        if(filter !== "all" && data.category !== filter) return;
+
+        const card = document.createElement("article");
+        card.className = "course-card reveal show";
+        card.dataset.category = data.category;
+        card.addEventListener("click",()=>openDepartment(key));
+
+        const preview = data.overview.slice(0,4).map(item=>`<li>${escapeHtml(item)}</li>`).join("");
+
+        card.innerHTML = `
+            <div class="course-card-inner">
+                <div class="course-front">
+                    <div class="course-image">
+                        <img src="${courseImages[key]}" alt="${escapeHtml(data.title)}">
+                        <span class="course-code">${escapeHtml(data.code)}</span>
+                    </div>
+                    <div class="course-info">
+                        <h3>${escapeHtml(data.title)}</h3>
+                        <p>${escapeHtml(data.overview.slice(0,4).join(" · "))}</p>
+                    </div>
+                </div>
+                <div class="course-back">
+                    <h3>${escapeHtml(shortName(data.title))}</h3>
+                    <p>${escapeHtml(data.description)}</p>
+                    <ul>${preview}</ul>
+                    <div class="course-open">OPEN DEPARTMENT</div>
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function shortName(title){
+    const names = {
+        "Computer Science & Engineering":"CSE",
+        "Artificial Intelligence & Machine Learning":"AI / ML",
+        "Mechanical Engineering":"Mechanical",
+        "Machine Tool Technology":"MTT",
+        "Electronics & Communication Engineering":"ECE",
+        "Electrical & Electronics Engineering":"EEE",
+        "Civil Engineering":"Civil",
+        "Automobile Engineering":"Automobile",
+        "Commercial Practice":"Commercial Practice"
+    };
+    return names[title] || title;
+}
+
+function filterCourses(category,button){
+    document.querySelectorAll(".filter-btn").forEach(btn=>btn.classList.remove("active"));
+    button.classList.add("active");
+    renderCourses(category);
+}
+
+/* =========================================================
+   DEPARTMENT MODAL
+   ========================================================= */
+function openDepartment(key){
+    const data = departments[key];
+    if(!data) return;
+
+    document.body.classList.add("modal-open");
+    document.getElementById("departmentCode").textContent = data.code;
+    document.getElementById("departmentTitle").textContent = data.title;
+    document.getElementById("departmentDescription").textContent =
+        `${data.description} Programme: 3-Year Diploma / learning pathway.`;
+
+    document.getElementById("departmentPhoto").src = data.image;
+    document.getElementById("departmentPhoto").alt = data.title;
+
+    fillList("overviewList",data.overview);
+    fillList("classroomsList",data.classrooms);
+    fillList("labsList",data.labs);
+    fillList("facilitiesList",data.facilities);
+
+    document.querySelectorAll(".modal-tab").forEach(tab=>tab.classList.remove("active"));
+    document.querySelector(".modal-tab").classList.add("active");
+    document.querySelectorAll(".modal-panel").forEach(panel=>panel.classList.remove("active"));
+    document.getElementById("panel-overview").classList.add("active");
+
+    document.getElementById("departmentModal").classList.add("show");
+}
+
+function fillList(id,array){
+    const element = document.getElementById(id);
+    element.innerHTML = "";
+    array.forEach(item=>{
+        const li = document.createElement("li");
+        li.textContent = item;
+        element.appendChild(li);
+    });
+}
+
+function switchModalTab(id,button){
+    document.querySelectorAll(".modal-tab").forEach(tab=>tab.classList.remove("active"));
+    document.querySelectorAll(".modal-panel").forEach(panel=>panel.classList.remove("active"));
+    button.classList.add("active");
+    document.getElementById(`panel-${id}`).classList.add("active");
+}
+
+function closeModal(){
+    document.body.classList.remove("modal-open");
+    document.getElementById("departmentModal").classList.remove("show");
+}
+
+/* =========================================================
+   IMAGE / CAMPUS / SPORTS / FACULTY MODALS
+   ========================================================= */
+function openImage(title,text,image){
+    document.body.classList.add("modal-open");
+    document.getElementById("imageModalTitle").textContent = title;
+    document.getElementById("imageModalText").textContent = text;
+    document.getElementById("imageModalPhoto").src = image;
+    document.getElementById("imageModalPhoto").alt = title;
+    document.getElementById("imageModal").classList.add("show");
+}
+
+function closeImageModal(){
+    document.body.classList.remove("modal-open");
+    document.getElementById("imageModal").classList.remove("show");
+}
+
+const campusData = {
+    main:{
+        title:"Main College Campus",
+        text:"Government CPC Polytechnic campus experience with academic blocks, workshops, student areas and green spaces.",
+        image:"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=90"
+    },
+    workshop:{
+        title:"Workshops",
+        text:"Practical workshop spaces represented in the college website concept.",
+        image:"https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1400&q=90"
+    },
+    student:{
+        title:"Student Areas",
+        text:"Student community and collaborative campus spaces.",
+        image:"https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=90"
+    }
+};
+
+function openCampus(key){
+    const data = campusData[key];
+    if(!data) return;
+    openImage(data.title,data.text,data.image);
+}
+
+function openSport(title,text,image){
+    openImage(title,text,image);
+}
+
+function openFaculty(title,text,image){
+    openImage(title,text,image);
+}
+
+/* =========================================================
+   CLASSROOMS
+   ========================================================= */
+const classroomData = {
+    cse:{
+        label:"CSE · CLASSROOM",
+        title:"Computer Science",
+        image:courseImages.cse,
+        text:"Programming, database, web and project-oriented classroom learning.",
+        details:[
+            ["Focus","Programming & software"],
+            ["Learning","Theory + practical"],
+            ["Projects","Application development"]
+        ]
+    },
+    me:{
+        label:"ME · CLASSROOM",
+        title:"Mechanical",
+        image:courseImages.mechanical,
+        text:"Engineering theory, machine design, manufacturing and workshop learning.",
+        details:[
+            ["Focus","Machines & manufacturing"],
+            ["Learning","Theory + workshop"],
+            ["Projects","Design & production"]
+        ]
+    },
+    ece:{
+        label:"ECE · CLASSROOM",
+        title:"Electronics",
+        image:courseImages.ece,
+        text:"Electronics, digital systems, communication and embedded technology.",
+        details:[
+            ["Focus","Electronics & communication"],
+            ["Learning","Theory + electronics lab"],
+            ["Projects","Embedded technology"]
+        ]
+    },
+    eee:{
+        label:"EEE · CLASSROOM",
+        title:"Electrical",
+        image:courseImages.eee,
+        text:"Electrical machines, power systems, control and electronics.",
+        details:[
+            ["Focus","Power & electrical systems"],
+            ["Learning","Theory + practice"],
+            ["Projects","Electrical technology"]
+        ]
+    },
+    civil:{
+        label:"CIVIL · CLASSROOM",
+        title:"Civil",
+        image:courseImages.civil,
+        text:"Construction, surveying, structures and engineering materials.",
+        details:[
+            ["Focus","Construction & infrastructure"],
+            ["Learning","Theory + survey + testing"],
+            ["Projects","Civil practice"]
+        ]
+    },
+    auto:{
+        label:"AUTO · CLASSROOM",
+        title:"Automobile",
+        image:courseImages.auto,
+        text:"Vehicle systems, engine technology, maintenance and diagnostics.",
+        details:[
+            ["Focus","Vehicles & automotive"],
+            ["Learning","Theory + workshop"],
+            ["Projects","Diagnostics & maintenance"]
+        ]
+    }
+};
+
+function changeClassroom(key,button){
+    document.querySelectorAll(".classroom-menu button").forEach(btn=>btn.classList.remove("active"));
+    button.classList.add("active");
+
+    const data = classroomData[key];
+    const panel = document.getElementById("classroomPanel");
+
+    panel.innerHTML = `
+        <div class="classroom-panel-top">
+            <img src="${data.image}" alt="${escapeHtml(data.title)} classroom">
+            <div class="classroom-panel-overlay"></div>
+            <div class="classroom-panel-title">
+                <span>${escapeHtml(data.label)}</span>
+                <h3>${escapeHtml(data.title)}</h3>
+            </div>
+        </div>
+        <div class="classroom-body">
+            <p>${escapeHtml(data.text)}</p>
+            <div class="classroom-details">
+                ${data.details.map(d=>`
+                    <div class="detail-box">
+                        <strong>${escapeHtml(d[0])}</strong>
+                        <span>${escapeHtml(d[1])}</span>
+                    </div>
+                `).join("")}
+            </div>
+        </div>
+    `;
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+const searchItems = [
+    ...courseOrder.map(key=>({
+        title:departments[key].title,
+        text:departments[key].overview.join(" · "),
+        action:()=>openDepartment(key)
+    })),
+    {title:"Campus",text:"Main campus · Workshops · Student Areas",action:()=>scrollToSection("campus")},
+    {title:"Laboratories",text:"Computer · Mechanical · Electronics · Civil",action:()=>scrollToSection("labs")},
+    {title:"Sports",text:"Cricket · Football · Volleyball · Athletics",action:()=>scrollToSection("sports")},
+    {title:"Faculty",text:"Department faculty and HOD cards",action:()=>scrollToSection("faculty")},
+    {title:"Admissions",text:"Eligibility · Application · Course Selection",action:()=>scrollToSection("admission")},
+    {title:"Contact",text:"College contact and navigation",action:()=>scrollToSection("contact")}
+];
+
+function openSearch(){
+    document.getElementById("searchOverlay").classList.add("show");
+    document.body.classList.add("modal-open");
+    setTimeout(()=>document.getElementById("globalSearch").focus(),100);
+    globalSearch();
+}
+
+function closeSearch(){
+    document.getElementById("searchOverlay").classList.remove("show");
+    document.body.classList.remove("modal-open");
+}
+
+function globalSearch(){
+    const query = document.getElementById("globalSearch").value.trim().toLowerCase();
+    const results = document.getElementById("searchResults");
+    results.innerHTML = "";
+
+    const matches = searchItems.filter(item=>{
+        if(!query) return true;
+        return `${item.title} ${item.text}`.toLowerCase().includes(query);
+    }).slice(0,12);
+
+    if(!matches.length){
+        results.innerHTML = `<div class="search-result"><strong>No results</strong><span>Try another keyword.</span></div>`;
+        return;
+    }
+
+    matches.forEach(item=>{
+        const result = document.createElement("div");
+        result.className = "search-result";
+        result.innerHTML = `<strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.text)}</span>`;
+        result.addEventListener("click",()=>{
+            closeSearch();
+            item.action();
+        });
+        results.appendChild(result);
+    });
+}
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+function submitContact(event){
+    event.preventDefault();
+    const form = event.target;
+    const name = form.elements.name.value.trim();
+    alert(`Thank you, ${name || "student"}. Your demonstration enquiry has been received.`);
+    form.reset();
+}
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+function toggleMenu(){
+    document.getElementById("navLinks").classList.toggle("open");
+}
+
+function scrollToSection(id){
+    const element = document.getElementById(id);
+    if(element) element.scrollIntoView({behavior:"smooth",block:"start"});
+    document.getElementById("navLinks").classList.remove("open");
+}
+
+/* =========================================================
+   REVEAL ANIMATION
+   ========================================================= */
+const revealObserver = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+            revealObserver.unobserve(entry.target);
+        }
+    });
+},{threshold:.12});
+
+function observeReveals(){
+    document.querySelectorAll(".reveal").forEach(element=>revealObserver.observe(element));
+}
+
+/* =========================================================
+   COUNTERS
+   ========================================================= */
+const counterObserver = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(!entry.isIntersecting) return;
+
+        const element = entry.target;
+        const target = Number(element.dataset.count);
+        let current = 0;
+        const duration = 1200;
+        const start = performance.now();
+
+        function tick(now){
+            const progress = Math.min((now-start)/duration,1);
+            current = Math.floor(progress*target);
+            element.textContent = current;
+            if(progress < 1){
+                requestAnimationFrame(tick);
+            }else{
+                element.textContent = target;
+            }
+        }
+        requestAnimationFrame(tick);
+        counterObserver.unobserve(element);
+    });
+},{threshold:.5});
+
+/* =========================================================
+   HEADER / BACK TO TOP
+   ========================================================= */
+window.addEventListener("scroll",()=>{
+    const header = document.getElementById("header");
+    const backTop = document.getElementById("backTop");
+
+    if(window.scrollY > 70){
+        header.classList.add("scrolled");
+        backTop.classList.add("show");
+    }else{
+        header.classList.remove("scrolled");
+        backTop.classList.remove("show");
+    }
+});
+
+/* =========================================================
+   ABOUT 3D TILT
+   ========================================================= */
+const aboutVisual = document.getElementById("aboutVisual");
+const about3d = document.getElementById("about3d");
+
+aboutVisual.addEventListener("mousemove",event=>{
+    const rect = aboutVisual.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const rotateY = ((x/rect.width)-.5)*10;
+    const rotateX = ((y/rect.height)-.5)*-10;
+    about3d.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
+
+aboutVisual.addEventListener("mouseleave",()=>{
+    about3d.style.transform = "rotateX(0deg) rotateY(0deg)";
+});
+
+/* =========================================================
+   KEYBOARD / MODAL CLOSE
+   ========================================================= */
+document.addEventListener("keydown",event=>{
+    if(event.key === "Escape"){
+        closeModal();
+        closeImageModal();
+        closeSearch();
+        document.getElementById("navLinks").classList.remove("open");
+    }
+});
+
+document.querySelectorAll(".modal").forEach(modal=>{
+    modal.addEventListener("click",event=>{
+        if(event.target === modal){
+            modal.classList.remove("show");
+            document.body.classList.remove("modal-open");
+        }
+    });
+});
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+function escapeHtml(value){
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+window.addEventListener("load",()=>{
+    renderCourses("all");
+    changeClassroom("cse",document.querySelector(".classroom-menu button"));
+    observeReveals();
+
+    document.querySelectorAll(".stat-number").forEach(element=>{
+        counterObserver.observe(element);
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    setTimeout(()=>{
+        document.getElementById("loader").classList.add("hide");
+    },900);
+});
+</script>
+
+
+<script>
+/* ===== CPC 3D INTERACTION ENGINE ===== */
+(function(){
+  const cards = document.querySelectorAll('.cpc-tilt');
+  cards.forEach(card=>{
+    card.addEventListener('mousemove', e=>{
+      const r=card.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
+      const rx=((y/r.height)-.5)*-10, ry=((x/r.width)-.5)*12;
+      card.style.transform=`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px) translateZ(20px)`;
+    });
+    card.addEventListener('mouseleave', ()=>card.style.transform='');
+  });
+  window.cpcOpenPage=function(id){
+    document.querySelectorAll('.cpc-page').forEach(p=>p.classList.remove('active'));
+    const page=document.getElementById(id);
+    if(page){page.classList.add('active');document.body.style.overflow='hidden';window.scrollTo(0,0);}
+  };
+  window.cpcClosePage=function(){
+    document.querySelectorAll('.cpc-page').forEach(p=>p.classList.remove('active'));
+    document.body.style.overflow='';
+  };
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')window.cpcClosePage();});
+})();
+</script>
+</body>
+</html>
